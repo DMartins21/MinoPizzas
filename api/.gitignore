@@ -1,0 +1,33 @@
+# --- COMPILAÇÃO / SAÍDA ---
+# Pasta onde o TypeScript gera os arquivos JS compilados (geralmente definida no tsconfig.json como 'outDir')
+dist/
+build/
+out/
+
+# Ignora arquivos de mapa de código (gerados para debug, se ativados)
+*.js.map
+*.d.ts.map
+
+# Se você compila arquivos JS na mesma pasta dos arquivos TS, descomente a linha abaixo:
+# src/**/*.js
+
+# --- DEPENDÊNCIAS ---
+node_modules/
+jspm_packages/
+
+# --- CONFIGURAÇÕES DE IDE / SISTEMA ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- SEGURANÇA / VARIÁVEIS DE AMBIENTE ---
+.env
+.env.local
+.env.*.local
+*.log
+
+# --- CACHE ---
+.eslintcache
+.parcel-cache
+.turbo/

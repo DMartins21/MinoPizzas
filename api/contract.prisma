@@ -1,0 +1,76 @@
+// use prisma-8
+
+model User {
+    id String @id @onCreate(uuid())
+    name String?
+    email String @unique
+    password String
+    role Role @default(STAFF)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @onCreate(now()) @onUpdate(now())
+    @@map("users")
+}
+
+enum Role{
+    STAFF
+    ADMIN
+}
+
+model Category{
+    id Int @id @default(autoincrement())
+    name String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @onCreate(now()) @onUpdate(now())
+
+    products Product[]
+
+    @@map("categories")
+}
+
+model Product {
+    id Int @id @default(autoincrement())
+    name String
+    price Int
+    description String
+    banner String
+    disable Boolean @default(false)
+
+    category_id Int
+    category Category @relation(fields:[category_id], references:[id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @onCreate(now()) @onUpdate(now())
+    @@map("products")
+}
+
+model Order{
+    id String @id @onCreate(uuid())
+    table Int
+    status Boolean @default(false)
+    draft Boolean @default(true)
+
+    name String?
+
+    items Item[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @onCreate(now()) @onUpdate(now())
+
+    @@map("orders")
+}
+
+model Item{
+    id String @onCreate(uuid())
+    amount Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @onCreate(now()) @onUpdate(now())
+
+    order_id String
+    order Order @relation(fields:[order_id], references:[id], onDelete:Cascade)
+
+    product_id Int
+    product Product @relation(fields:[product_id], references:[id], onDelete: Cascade)
+
+    @@map("items")
+}

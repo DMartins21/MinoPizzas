@@ -25,7 +25,7 @@ import type {
 export type StorageHash =
   StorageHashBase<'b80dd10b82474bb5fe55164e4d62d1b22c962f1b5c04396c5e55f977219fc469'>;
 export type ExecutionHash =
-  ExecutionHashBase<'9d778e361e0a3383d37012b177d29ae948ec82938b2d3bff88d953773cb063d9'>;
+  ExecutionHashBase<'4c1b4d4d8906608be531e947f63703f440225abbc03394fbc0178db0e9bd1432'>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
 
@@ -1079,6 +1079,7 @@ type ContractBase = Omit<
     readonly mutations: {
       readonly defaults: readonly [
         {
+          readonly onCreate: { readonly id: 'instantNow'; readonly kind: 'generator' };
           readonly onUpdate: { readonly id: 'instantNow'; readonly kind: 'generator' };
           readonly ref: {
             readonly entry: 'categories';
@@ -1095,6 +1096,7 @@ type ContractBase = Omit<
           };
         },
         {
+          readonly onCreate: { readonly id: 'instantNow'; readonly kind: 'generator' };
           readonly onUpdate: { readonly id: 'instantNow'; readonly kind: 'generator' };
           readonly ref: {
             readonly entry: 'items';
@@ -1111,6 +1113,7 @@ type ContractBase = Omit<
           };
         },
         {
+          readonly onCreate: { readonly id: 'instantNow'; readonly kind: 'generator' };
           readonly onUpdate: { readonly id: 'instantNow'; readonly kind: 'generator' };
           readonly ref: {
             readonly entry: 'orders';
@@ -1119,6 +1122,7 @@ type ContractBase = Omit<
           };
         },
         {
+          readonly onCreate: { readonly id: 'instantNow'; readonly kind: 'generator' };
           readonly onUpdate: { readonly id: 'instantNow'; readonly kind: 'generator' };
           readonly ref: {
             readonly entry: 'products';
@@ -1135,6 +1139,7 @@ type ContractBase = Omit<
           };
         },
         {
+          readonly onCreate: { readonly id: 'instantNow'; readonly kind: 'generator' };
           readonly onUpdate: { readonly id: 'instantNow'; readonly kind: 'generator' };
           readonly ref: {
             readonly entry: 'users';

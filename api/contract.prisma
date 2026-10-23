@@ -7,7 +7,7 @@ model User {
     password String
     role Role @default(STAFF)
     createdAt DateTime @default(now())
-    updatedAt DateTime @onUpdate(now())
+    updatedAt DateTime @onCreate(now()) @onUpdate(now())
     @@map("users")
 }
 
@@ -21,7 +21,7 @@ model Category{
     name String
 
     createdAt DateTime @default(now())
-    updatedAt DateTime @onUpdate(now())
+    updatedAt DateTime @onCreate(now()) @onUpdate(now())
 
     products Product[]
 
@@ -40,7 +40,7 @@ model Product {
     category Category @relation(fields:[category_id], references:[id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
-    updatedAt DateTime @onUpdate(now())
+    updatedAt DateTime @onCreate(now()) @onUpdate(now())
     @@map("products")
 }
 
@@ -55,7 +55,7 @@ model Order{
     items Item[]
 
     createdAt DateTime @default(now())
-    updatedAt DateTime @onUpdate(now())
+    updatedAt DateTime @onCreate(now()) @onUpdate(now())
 
     @@map("orders")
 }
@@ -64,7 +64,7 @@ model Item{
     id String @onCreate(uuid())
     amount Int
     createdAt DateTime @default(now())
-    updatedAt DateTime @onUpdate(now())
+    updatedAt DateTime @onCreate(now()) @onUpdate(now())
 
     order_id String
     order Order @relation(fields:[order_id], references:[id], onDelete:Cascade)

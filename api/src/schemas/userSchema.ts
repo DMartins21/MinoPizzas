@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-exports.createUserSchema = z.object({
+export const createUserSchema = z.object({
     body: z.object({
         name: z.string({ message: 'O nome precisa ser um texto!' })
         .min(3, { message: 'No minimo de 3 letras' }),

@@ -6,6 +6,6 @@ import { createUserSchema } from '../schemas/userSchema';
 const route = Router();
 
 route.post('/users', validateSchema(createUserSchema), new UserController().newUser);
-route.get('/users/myUser', new UserController().myUser)
+route.get('/users/myUsers', new UserController().myUsers)
 
 export { route };

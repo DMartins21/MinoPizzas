@@ -9,16 +9,18 @@ class UserController {
         
         const userService = new UserService();
 
-        const user = await userService.createUser();
+        const user = await userService.createUser( {
+            name: name,
+            email: email,
+            password: password
+        } );
         
         res.json({ message: user });
     }
 
-    async myUser(req, res){
-        console.log('Bem Vindo a página inicial do usuário');
-        
+    async myUsers(req: Request, res: Response){
         const userService = new UserService();
-        const user = await userService.myUser();
+        const user = await userService.myUsers();
 
         return res.json({ message: user })
     }

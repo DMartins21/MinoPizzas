@@ -18,11 +18,24 @@ class UserController {
         res.json({ message: user });
     }
 
-    async myUsers(req: Request, res: Response){
-        const userService = new UserService();
-        const user = await userService.myUsers();
+    async authUser(req: Request, res: Response){
+        const { email, password } = req.body;
 
-        return res.json({ message: user })
+        const authService = new UserService();
+
+        const session = await authService.login({ email, password });
+
+        res.json({ session })
+    }
+
+    async myUser(req: Request, res: Response){
+
+        const user_id = req.user_id;
+
+        const userService = new UserService();
+        const user = await userService.myUser(user_id);
+
+        res.json( user );
     }
 }
 

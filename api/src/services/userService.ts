@@ -79,10 +79,24 @@ class UserService {
 
     }
 
-    async myUsers(){
-        const user = await db.orm.public.User.all()
+    async myUser(user_id: string){
+        
+        const user = await db.orm.public.User.where({
+            id: user_id
+        }).first()
 
-        return user;
+        if(!user)
+            throw new Error('Usuário Não Cadastrado!')
+
+        const userDetails = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            createdAt: user.createdAt
+        };
+
+
+        return userDetails;
     }
 }
 

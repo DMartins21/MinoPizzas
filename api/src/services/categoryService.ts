@@ -23,6 +23,11 @@ class CategoryService {
 
         return category;
     }
+    async getAllCategories(){
+        const categories = await db.orm.public.Category.all();
+        return categories;
+    }
+    
 }
 
 export { CategoryService };

@@ -16,6 +16,7 @@ route.get('/users/myUser', isAuthenticated, new UserController().myUser)
 
 route.post('/session', validateSchema(authUser), new UserController().authUser)
 
-route.post('/category', isAuthenticated, isAdmin, validateSchema(createCategorySchema), new CategoryController().newCategory);
+route.post('/category/create', isAuthenticated, isAdmin, validateSchema(createCategorySchema), new CategoryController().newCategory);
+route.get('/category/getAll', new CategoryController().getAllCategoires);
 
 export { route };

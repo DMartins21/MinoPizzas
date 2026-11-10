@@ -10,6 +10,7 @@ import { createUserSchema } from '../schemas/userSchema';
 import { authUser } from '../schemas/userSchema';
 import { createCategorySchema } from '../schemas/categorySchema';
 import { ProductController } from '../controllers/productController';
+import { createProductSchema } from '../schemas/productSchema';
 
 const route = Router();
 const upload = multer(configure);
@@ -24,6 +25,6 @@ route.post('/category/create', isAuthenticated, isAdmin, validateSchema(createCa
 route.get('/category/getAll', new CategoryController().getAllCategoires);
 
 // product
-route.post('/product/newProduct', isAuthenticated, isAdmin, upload.single('file') ,new ProductController().create)
+route.post('/product/newProduct', isAuthenticated, isAdmin, upload.single('file') , validateSchema(createProductSchema), new ProductController().create)
 
 export { route };

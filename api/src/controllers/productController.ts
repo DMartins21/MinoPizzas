@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { ProductService } from '../services/productService';
-import { json } from 'zod';
 
 class ProductController{
     async create(req: Request, res: Response) {

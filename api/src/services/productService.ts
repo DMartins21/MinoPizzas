@@ -96,7 +96,7 @@ class ProductService{
         });
 
         if(search === null)
-            return { message: 'Produto não encontrado!' }
+            throw new Error('Produto não encontrado!')
 
         // search.disable = true;
         return { message: 'Produto desabilitado com sucesso!' }

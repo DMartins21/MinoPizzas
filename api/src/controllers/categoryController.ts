@@ -20,6 +20,18 @@ class CategoryController {
 
         return res.status(200).json(categories);
     }
+
+    async getCategoryProducts(req: Request, res: Response){
+        const { category_id } = req.query;
+        const id = Number(category_id)
+
+        const service = new CategoryService();
+        const categoryProds = await service.getCategoryProducts({ category_id: id })
+        if(categoryProds.length === 0)
+            return res.sendStatus(204);
+        
+        return res.status(200).json(categoryProds);
+    }
 }
 
 export { CategoryController };

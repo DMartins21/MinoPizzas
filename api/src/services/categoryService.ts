@@ -4,6 +4,10 @@ interface CreateCategoryProps{
     name: string;
 }
 
+interface getCategoryProps{
+    category_id: number
+}
+
 class CategoryService {
     async createCategory({ name }: CreateCategoryProps){
         const categoryExist = await db.orm.public.Category.where({
@@ -26,6 +30,16 @@ class CategoryService {
     async getAllCategories(){
         const categories = await db.orm.public.Category.all();
         return categories;
+    }
+
+    async getCategoryProducts({ category_id } : getCategoryProps){
+        const products = await db.orm.public.Category.select("id", "name", "createdAt", "updatedAt")
+        .include("products")
+        .where({
+            id: category_id
+        }).all();
+        
+        return products
     }
     
 }

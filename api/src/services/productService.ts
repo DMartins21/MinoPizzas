@@ -80,7 +80,9 @@ class ProductService{
 
     }
     async getProducts({ disable } : getProductsProps){
-        const products = await db.orm.public.Product.where({
+        const products = await db.orm.public.Product
+        .select("id", "name", "price", "description", "banner", "disable" ,"category_id")
+        .where({
             disable: disable
         }).all();
 
@@ -89,7 +91,9 @@ class ProductService{
 
     async deleteProduct({ product_id } : deleteProductProps){
        
-        const search = await db.orm.public.Product.where({
+        const search = await db.orm.public.Product
+        .select("id", "name", "price", "description", "disable" ,"createdAt", "updatedAt", "category_id")
+        .where({
             id: product_id
         }).update({
             disable: true

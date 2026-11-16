@@ -11,6 +11,8 @@ import { authUser } from '../schemas/userSchema';
 import { createCategorySchema } from '../schemas/categorySchema';
 import { ProductController } from '../controllers/productController';
 import { createProductSchema } from '../schemas/productSchema';
+import { getProducts } from '../schemas/productSchema';
+import { deleteProduct } from '../schemas/productSchema';
 
 const route = Router();
 const upload = multer(configure);
@@ -26,5 +28,7 @@ route.get('/category/getAll', new CategoryController().getAllCategoires);
 
 // product
 route.post('/product/newProduct', isAuthenticated, isAdmin, upload.single('file') , validateSchema(createProductSchema), new ProductController().create)
+route.get('/product/getAll', isAuthenticated, validateSchema(getProducts), new ProductController().getProducts)
+route.delete('/product', isAuthenticated, isAdmin, validateSchema(deleteProduct), new ProductController().deleteProduct);
 
 export { route };

@@ -10,6 +10,13 @@ interface newProductProps{
     imageBuffer: Buffer,
     imageName: string,
 }
+interface getProductsProps{
+    disable: boolean
+}
+
+interface deleteProductProps{
+    product_id: number
+}
 
 class ProductService{
     async newProduct({ 
@@ -71,6 +78,28 @@ class ProductService{
 
             return createdProduct;
 
+    }
+    async getProducts({ disable } : getProductsProps){
+        const products = await db.orm.public.Product.where({
+            disable: disable
+        }).all();
+
+        return products;
+    }
+
+    async deleteProduct({ product_id } : deleteProductProps){
+       
+        const search = await db.orm.public.Product.where({
+            id: product_id
+        }).update({
+            disable: true
+        });
+
+        if(search === null)
+            return { message: 'Produto não encontrado!' }
+
+        // search.disable = true;
+        return { message: 'Produto desabilitado com sucesso!' }
     }
 }
 

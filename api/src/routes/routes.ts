@@ -14,6 +14,8 @@ import { ProductController } from '../controllers/productController';
 import { createProductSchema } from '../schemas/productSchema';
 import { getProducts } from '../schemas/productSchema';
 import { deleteProduct } from '../schemas/productSchema';
+import { OrderController } from '../controllers/orderController';
+import { createOrder } from '../schemas/orderSchema';
 
 const route = Router();
 const upload = multer(configure);
@@ -32,5 +34,9 @@ route.get('/category/CategoryProducts', isAuthenticated , new CategoryController
 route.post('/product/newProduct', isAuthenticated, isAdmin, upload.single('file') , validateSchema(createProductSchema), new ProductController().create)
 route.get('/product/getAll', isAuthenticated, validateSchema(getProducts), new ProductController().getProducts)
 route.delete('/product', isAuthenticated, isAdmin, validateSchema(deleteProduct), validateSchema(getCategoryProducts) ,new ProductController().deleteProduct);
+
+//Orders
+route.get('/orders', isAuthenticated, new OrderController().ListOrders);
+route.post('/order', isAuthenticated, validateSchema(createOrder), new OrderController().NewOrder);
 
 export { route };

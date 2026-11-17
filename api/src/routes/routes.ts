@@ -16,6 +16,7 @@ import { getProducts } from '../schemas/productSchema';
 import { deleteProduct } from '../schemas/productSchema';
 import { OrderController } from '../controllers/orderController';
 import { createOrder } from '../schemas/orderSchema';
+import { addItemInOrder } from '../schemas/orderSchema';
 
 const route = Router();
 const upload = multer(configure);
@@ -36,7 +37,8 @@ route.get('/product/getAll', isAuthenticated, validateSchema(getProducts), new P
 route.delete('/product', isAuthenticated, isAdmin, validateSchema(deleteProduct), validateSchema(getCategoryProducts) ,new ProductController().deleteProduct);
 
 //Orders
-route.get('/orders', isAuthenticated, new OrderController().ListOrders);
+route.get('/order', isAuthenticated, new OrderController().ListOrders);
 route.post('/order', isAuthenticated, validateSchema(createOrder), new OrderController().NewOrder);
+route.post('/order/addItem', isAuthenticated, validateSchema(addItemInOrder), new OrderController().AddItemsInOrder);
 
 export { route };

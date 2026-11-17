@@ -5,8 +5,14 @@ interface ListOrdersServiceProps{
 }
 
 interface NewOrderProps{
-    table: Number,
+    table: number,
     name?: string
+}
+
+interface AddItemsInOrderProps{
+    order_id: string,
+    product_id: number,
+    amount: number
 }
 
 class OrdersService{
@@ -44,6 +50,37 @@ class OrdersService{
         }catch(err){
             throw new Error('Erro ao Criar Pedido')
         }
+    }
+
+    async AddItemsInOrder({ order_id, product_id, amount } : AddItemsInOrderProps){
+        const orderExist = await db.orm.public.Order.where({
+            id: order_id
+        }).first();
+        if(!orderExist)
+            throw new Error('Pedido não Encontrado');
+
+        const productExist = await db.orm.public.Product.where({
+            id: product_id,
+            disable: false
+        }).first();
+        if(!productExist)
+            throw new Error('Produto não existe no catalogo');
+
+        const item = await db.orm.public.Item
+        .create({
+            order_id : order_id,
+            product_id: product_id,
+            amount: amount
+        });
+
+        const data = await db.orm.public.Item
+        .select('id', 'amount', 'order_id', 'product_id', 'createdAt')
+        .include('product', 
+            (p) => p.select('id', 'name', 'price', 'description', 'banner'))
+        .first();
+
+        return data;
+
     }
 }
 

@@ -15,8 +15,9 @@ import { createProductSchema } from '../schemas/productSchema';
 import { getProducts } from '../schemas/productSchema';
 import { deleteProduct } from '../schemas/productSchema';
 import { OrderController } from '../controllers/orderController';
-import { createOrder } from '../schemas/orderSchema';
+import { createOrder, orderIdSchema } from '../schemas/orderSchema';
 import { addItemInOrder } from '../schemas/orderSchema';
+import { removeItemInOrder } from '../schemas/orderSchema';
 
 const route = Router();
 const upload = multer(configure);
@@ -38,7 +39,9 @@ route.delete('/product', isAuthenticated, isAdmin, validateSchema(deleteProduct)
 
 //Orders
 route.get('/order', isAuthenticated, new OrderController().ListOrders);
+route.get('/order/detail', isAuthenticated, validateSchema(orderIdSchema) ,new OrderController().VisualizarPedido);
 route.post('/order', isAuthenticated, validateSchema(createOrder), new OrderController().NewOrder);
 route.post('/order/addItem', isAuthenticated, validateSchema(addItemInOrder), new OrderController().AddItemsInOrder);
+route.delete('/order/removeItem', isAuthenticated, validateSchema(removeItemInOrder), new OrderController().RemoveItemInOrder);
 
 export { route };

@@ -22,3 +22,15 @@ export const addItemInOrder = z.object({
             .positive({ message: 'Amount deve ser um número positivo' })
     })
 });
+
+export const orderIdSchema = z.object({
+    query: z.object({
+        order_Id: z.string({ message: 'Id do Pedido obrigatório!' })
+    })
+});
+
+export const removeItemInOrder = z.object({
+    query: z.object({
+        item_id: z.string({ message:'O número do item é obrigátorio' })   
+    })
+});

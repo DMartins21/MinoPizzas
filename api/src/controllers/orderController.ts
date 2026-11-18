@@ -1,5 +1,6 @@
 import { Response, Request } from "express";
 import { OrdersService } from "../services/ordersService";
+import { string } from "zod";
 
 class OrderController{
     async ListOrders(req: Request, res: Response){
@@ -10,6 +11,20 @@ class OrderController{
 
         return res.status(200).json(orders)
 
+    }
+
+        async VisualizarPedido(req: Request, res: Response) {
+
+        const { order_Id } = req.query;
+
+        const service = new OrdersService();
+        const orderDetails = await service.GetOrderById({ order_id : order_Id as string});
+
+        if (!orderDetails) {
+            return res.status(404).json({ message: `Pedido com ID ${order_Id} não encontrado.` });
+        }
+
+        return res.status(200).json(orderDetails);
     }
 
     async NewOrder(req: Request, res: Response){
@@ -28,6 +43,15 @@ class OrderController{
         const newItem = await service.AddItemsInOrder({ order_id, product_id, amount });
 
         return res.status(200).json(newItem);
+    }
+
+    async RemoveItemInOrder(req: Request, res: Response){
+        const  { item_id } = req.query;
+        
+        const service = new OrdersService();
+        const itemRemove = await service.removeItemInOrder({ item_id: item_id as string });
+
+        return res.status(204).json(itemRemove);
     }
 }
 

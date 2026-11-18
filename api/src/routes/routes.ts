@@ -8,16 +8,11 @@ import { isAuthenticated } from '../middlewares/isAuthenticated';
 import { isAdmin } from '../middlewares/isAdmin';
 import { createUserSchema } from '../schemas/userSchema';
 import { authUser } from '../schemas/userSchema';
-import { createCategorySchema } from '../schemas/categorySchema';
-import { getCategoryProducts } from '../schemas/categorySchema';
+import { createCategorySchema, getCategoryProducts } from '../schemas/categorySchema';
 import { ProductController } from '../controllers/productController';
-import { createProductSchema } from '../schemas/productSchema';
-import { getProducts } from '../schemas/productSchema';
-import { deleteProduct } from '../schemas/productSchema';
+import { createProductSchema, getProducts, deleteProduct } from '../schemas/productSchema';
 import { OrderController } from '../controllers/orderController';
-import { createOrder, orderIdSchema } from '../schemas/orderSchema';
-import { addItemInOrder } from '../schemas/orderSchema';
-import { removeItemInOrder } from '../schemas/orderSchema';
+import { createOrder, finishOrder, orderIdSchema, addItemInOrder, removeItemInOrder, sendOrder, deleteOrderSchema } from '../schemas/orderSchema';
 
 const route = Router();
 const upload = multer(configure);
@@ -39,9 +34,19 @@ route.delete('/product', isAuthenticated, isAdmin, validateSchema(deleteProduct)
 
 //Orders
 route.get('/order', isAuthenticated, new OrderController().ListOrders);
-route.get('/order/detail', isAuthenticated, validateSchema(orderIdSchema) ,new OrderController().VisualizarPedido);
+
+route.get('/order/detail', isAuthenticated, validateSchema(orderIdSchema) ,new OrderController().OrderDetails);
+
 route.post('/order', isAuthenticated, validateSchema(createOrder), new OrderController().NewOrder);
+
 route.post('/order/addItem', isAuthenticated, validateSchema(addItemInOrder), new OrderController().AddItemsInOrder);
+
+route.put('/order/sendOrder', isAuthenticated, validateSchema(sendOrder) ,new OrderController().SendOrder);
+
+route.put('/order/finish', isAuthenticated, validateSchema(finishOrder), new OrderController().FinishOrder);
+
 route.delete('/order/removeItem', isAuthenticated, validateSchema(removeItemInOrder), new OrderController().RemoveItemInOrder);
+
+route.delete('/order/deleteOrder', isAuthenticated, validateSchema(deleteOrderSchema), new OrderController().DeleteOrder);
 
 export { route };

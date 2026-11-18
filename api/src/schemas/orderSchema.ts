@@ -9,6 +9,21 @@ export const createOrder = z.object({
     })
 });
 
+
+export const sendOrder = z.object({
+    body: z.object({
+            name: z.string({ message: 'O Nome é obrigatório' }),
+            order_id: z.string({ message: 'Número do Pedido é obrigatório' } )            
+    })
+});
+
+export const finishOrder = z.object({
+    body: z.object({
+            order_id: z.string({ message: 'Número do Pedido é obrigatório' } )            
+    })
+});
+
+
 export const addItemInOrder = z.object({
     body: z.object({
             order_id: z.string({ message: 'O número do Pedido é obrigatório' }),
@@ -32,5 +47,11 @@ export const orderIdSchema = z.object({
 export const removeItemInOrder = z.object({
     query: z.object({
         item_id: z.string({ message:'O número do item é obrigátorio' })   
+    })
+});
+
+export const deleteOrderSchema = z.object({
+    query: z.object({
+        order_id: z.string({ message: 'Id do Pedido obrigatório!' })
     })
 });

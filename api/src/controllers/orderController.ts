@@ -1,6 +1,5 @@
 import { Response, Request } from "express";
 import { OrdersService } from "../services/ordersService";
-import { string } from "zod";
 
 class OrderController{
     async ListOrders(req: Request, res: Response){
@@ -13,7 +12,7 @@ class OrderController{
 
     }
 
-        async VisualizarPedido(req: Request, res: Response) {
+        async OrderDetails(req: Request, res: Response) {
 
         const { order_Id } = req.query;
 
@@ -43,6 +42,36 @@ class OrderController{
         const newItem = await service.AddItemsInOrder({ order_id, product_id, amount });
 
         return res.status(200).json(newItem);
+    }
+
+    async SendOrder(req: Request, res: Response){
+        const { name, order_id } = req.body;
+
+        const service = new OrdersService();
+        const send = await service.SendOrder({ name: name, order_id: order_id });
+
+
+        return res.status(200).json(send);
+
+    }
+
+    async FinishOrder(req: Request, res: Response) {
+
+        const { order_id } = req.body;
+
+        const service = new OrdersService();
+        
+        const finishOrder = await service.FinishOrder({ order_id });
+
+        return res.status(200).json(finishOrder);
+    }
+
+    async DeleteOrder(req: Request, res: Response){
+        const { order_id } = req.query;
+
+        const service = new OrdersService();
+        const deleteOrder = await service.DeleteOrder({ order_id : order_id as string });
+        return res.status(204).json(deleteOrder);
     }
 
     async RemoveItemInOrder(req: Request, res: Response){

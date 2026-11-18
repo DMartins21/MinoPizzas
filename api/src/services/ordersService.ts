@@ -4,6 +4,15 @@ interface ListOrdersServiceProps{
     draft: string;
 }
 
+interface SendOrderProps{
+    name: string,
+    order_id: string
+}
+
+interface FinishOrderProps{
+    order_id: string
+}
+
 interface NewOrderProps{
     table: number,
     name?: string
@@ -131,6 +140,71 @@ class OrdersService{
             throw new Error('Erro ao remover item');
         }
     }
+
+    async DeleteOrder({ order_id }: FinishOrderProps){
+        try{
+        if(!await db.orm.public.Order.where({
+            id: order_id
+        }).first()){
+            throw new Error('Pedido não encontrado');
+        }
+        const order = await db.orm.public.Order.where({
+            id: order_id
+        }).delete();
+
+        return 'Pedido Deletado!';
+    }catch(err){
+        throw new Error('Erro ao tentar deletar pedido');
+    }
+    }
+
+    async SendOrder({ name ,order_id } : SendOrderProps){
+        const orderExist = await db.orm.public.Order.where({
+            id: order_id
+        }).first();
+
+        if(!orderExist)
+            throw new Error('Pedido não registrado');
+
+        const updateOrder = await db.orm.public.Order.where({
+            id: order_id
+        })
+        .select('id', 'table', 'name', 'status', 'draft' ,'createdAt')
+        .update({
+            draft: false
+        });
+        
+        return updateOrder;
+
+    }
+
+    async FinishOrder({ order_id }: FinishOrderProps){
+
+        try{
+        var order = await db.orm.public.Order.where({
+            id: order_id
+        }).first();
+
+        if(!order)
+            throw new Error('Pedido não registrado')
+
+        const order_finish = await db.orm.public.Order.where({
+            id: order_id
+        })
+        .select('id', 'table', 'name', 'status', 'updatedAt')
+        .update({
+            status: true
+        });
+        
+        if(!order_finish)
+            throw new Error('Falha ao Finalizar');
+
+        return order_finish;
+    }catch(err){
+        console.log(err)
+        throw new Error('Falha no Pedido')
+    }
+}
 
 }
 

@@ -61,7 +61,7 @@ model Order{
 }
 
 model Item{
-    id String @onCreate(uuid())
+    id String @id @onCreate(uuid())
     amount Int
     createdAt DateTime @default(now())
     updatedAt DateTime @onCreate(now()) @onUpdate(now())

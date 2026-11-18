@@ -663,6 +663,11 @@
                   "unique": false
                 }
               ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
               "uniques": []
             },
             "orders": {
@@ -912,7 +917,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "b80dd10b82474bb5fe55164e4d62d1b22c962f1b5c04396c5e55f977219fc469"
+    "storageHash": "567143b87cd494784d9b59d506f6cd635ac8dd24f76258194b5b5725f9c80cc1"
   },
   "execution": {
     "executionHash": "4c1b4d4d8906608be531e947f63703f440225abbc03394fbc0178db0e9bd1432",
